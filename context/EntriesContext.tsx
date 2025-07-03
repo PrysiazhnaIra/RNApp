@@ -1,4 +1,5 @@
-import { createContext, useContext, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { createContext, useContext, useEffect, useState } from "react";
 
 export type Entry = {
   id: number;
@@ -13,15 +14,43 @@ type EntriesContextType = {
 
 const EntriesContext = createContext<EntriesContextType | undefined>(undefined);
 
+const STORAGE_KEY = "@mood_entries";
+
 export function EntriesProvider({ children }: { children: React.ReactNode }) {
   const [entries, setEntries] = useState<Entry[]>([]);
+
+  useEffect(() => {
+    const loadEntries = async () => {
+      try {
+        const saved = await AsyncStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          const parsed: Entry[] = JSON.parse(saved);
+          console.log("✅ Loaded entries:", parsed);
+          setEntries(parsed);
+        } else {
+          console.log("No saved entries found.");
+        }
+      } catch (error) {
+        console.error("Failed to load entries from storage:", error);
+      }
+    };
+    loadEntries();
+  }, []);
 
   const addEntry = (entry: Omit<Entry, "id">) => {
     const newEntry = {
       ...entry,
       id: Date.now(),
     };
-    setEntries((prevEntries) => [newEntry, ...prevEntries]);
+
+    const updated = [...entries, newEntry];
+    setEntries(updated);
+
+    AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updated))
+      .then(() => console.log("✅ Entries saved!"))
+      .catch((error: any) => {
+        console.error("Failed to save entries to storage:", error);
+      });
   };
 
   return (
