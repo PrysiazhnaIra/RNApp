@@ -10,8 +10,11 @@ export default function HomeScreen() {
     <View style={styles.container}>
       <Text style={styles.title}>Welcome to Mood Diary!</Text>
 
-      <Link href="/add-entry" asChild>
+      <Link href="/add-entry" asChild style={{ marginBottom: 20 }}>
         <Button title="Add New Entry" />
+      </Link>
+      <Link href="/about" asChild>
+        <Button title="About App" />
       </Link>
 
       <FlatList
