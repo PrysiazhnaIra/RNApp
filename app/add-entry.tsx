@@ -1,4 +1,5 @@
 import MoodButton from "@/components/MoodButton";
+import { useEntries } from "@/context/EntriesContext";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import {
@@ -13,17 +14,17 @@ import {
 export default function AddEntryScreen() {
   const [note, setNote] = useState("");
   const [mood, setMood] = useState<string | null>(null);
+  const { addEntry } = useEntries();
   const router = useRouter();
 
-  const moods = ["😊", "😐", "😢", "😠"];
+  const moods = ["😊", "😐", "😢", "😠", "🙈", "🤸‍♂️", "🔥"];
 
   const handleSave = () => {
     if (!mood) {
       alert("Please select a mood before saving.");
       return;
     }
-
-    console.log("Saving entry:", { mood, note });
+    addEntry({ mood, note });
     setNote("");
     setMood(null);
     router.back();
