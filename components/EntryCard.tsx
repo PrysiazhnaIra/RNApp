@@ -1,15 +1,18 @@
-import { Entry } from "@/context/EntriesContext";
-import { StyleSheet, Text, View } from "react-native";
+import { Entry, useEntries } from "@/context/EntriesContext";
+import { Button, StyleSheet, Text, View } from "react-native";
 
 type Props = {
   entry: Entry;
 };
 
 export default function EntryCard({ entry }: Props) {
+  const { deleteEntry } = useEntries();
+
   return (
     <View style={styles.card}>
       <Text style={styles.emoji}>{entry.mood}</Text>
       <Text style={styles.note}>{entry.note}</Text>
+      <Button title="🗑 Видалити" onPress={() => deleteEntry(entry.id)} />
     </View>
   );
 }
