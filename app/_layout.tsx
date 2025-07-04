@@ -4,9 +4,11 @@ import Toast from "react-native-toast-message";
 
 export default function Layout() {
   return (
-    <EntriesProvider>
-      <Stack />
+    <>
+      <EntriesProvider>
+        <Stack />
+      </EntriesProvider>
       <Toast />
-    </EntriesProvider>
+    </>
   );
 }
