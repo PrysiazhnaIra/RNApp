@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createContext, useContext, useEffect, useState } from "react";
+import Toast from "react-native-toast-message";
 
 export type Entry = {
   id: number;
@@ -28,7 +29,11 @@ export function EntriesProvider({ children }: { children: React.ReactNode }) {
           const parsed: Entry[] = JSON.parse(saved);
           setEntries(parsed);
         } else {
-          console.log("No saved entries found.");
+          Toast.show({
+            type: "info",
+            text1: "No entries found",
+            text2: "Start adding your mood entries!",
+          });
         }
       } catch (error) {
         console.error("Failed to load entries from storage:", error);
@@ -43,14 +48,29 @@ export function EntriesProvider({ children }: { children: React.ReactNode }) {
       id: Date.now(),
     };
 
+    if (!newEntry.mood || !newEntry.note) {
+      Toast.show({
+        type: "error",
+        text1: "Missing fields",
+        text2: "Please fill in both mood and note.",
+      });
+      return;
+    }
+
+    Toast.show({
+      type: "success",
+      text1: "Entry added",
+      text2: `Mood: ${newEntry.mood}, Note: ${newEntry.note}`,
+    });
+
     const updated = [...entries, newEntry];
     setEntries(updated);
 
-    AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updated))
-      .then(() => console.log("✅ Entries saved!"))
-      .catch((error: any) => {
+    AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updated)).catch(
+      (error: any) => {
         console.error("Failed to save entries to storage:", error);
-      });
+      }
+    );
   };
 
   const deleteEntry = (id: number) => {
