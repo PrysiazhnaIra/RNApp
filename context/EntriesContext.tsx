@@ -10,6 +10,7 @@ export type Entry = {
 type EntriesContextType = {
   entries: Entry[];
   addEntry: (entry: Omit<Entry, "id">) => void;
+  deleteEntry: (id: number) => void;
 };
 
 const EntriesContext = createContext<EntriesContextType | undefined>(undefined);
@@ -25,7 +26,6 @@ export function EntriesProvider({ children }: { children: React.ReactNode }) {
         const saved = await AsyncStorage.getItem(STORAGE_KEY);
         if (saved) {
           const parsed: Entry[] = JSON.parse(saved);
-          console.log("✅ Loaded entries:", parsed);
           setEntries(parsed);
         } else {
           console.log("No saved entries found.");
@@ -53,8 +53,16 @@ export function EntriesProvider({ children }: { children: React.ReactNode }) {
       });
   };
 
+  const deleteEntry = (id: number) => {
+    const updated = entries.filter((entry) => entry.id !== id);
+    setEntries(updated);
+
+    AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updated)).catch((error) =>
+      console.error("Error saving after delete:", error)
+    );
+  };
   return (
-    <EntriesContext.Provider value={{ entries, addEntry }}>
+    <EntriesContext.Provider value={{ entries, addEntry, deleteEntry }}>
       {children}
     </EntriesContext.Provider>
   );
