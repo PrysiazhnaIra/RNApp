@@ -1,5 +1,13 @@
 import { Entry, useEntries } from "@/context/EntriesContext";
-import { Alert, Button, StyleSheet, Text, View } from "react-native";
+import { useRouter } from "expo-router";
+import {
+  Alert,
+  Button,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import Toast from "react-native-toast-message";
 
 type Props = {
@@ -8,6 +16,11 @@ type Props = {
 
 export default function EntryCard({ entry }: Props) {
   const { deleteEntry } = useEntries();
+  const router = useRouter();
+
+  const openDetails = () => {
+    router.push(`/entry/${entry.id}`);
+  };
 
   const handleDelete = () => {
     deleteEntry(entry.id);
@@ -34,11 +47,13 @@ export default function EntryCard({ entry }: Props) {
   };
 
   return (
-    <View style={styles.card}>
-      <Text style={styles.emoji}>{entry.mood}</Text>
-      <Text style={styles.note}>{entry.note}</Text>
-      <Button title="🗑 Видалити" onPress={confirmDelete} />
-    </View>
+    <TouchableOpacity onPress={openDetails} activeOpacity={0.7}>
+      <View style={styles.card}>
+        <Text style={styles.emoji}>{entry.mood}</Text>
+        <Text style={styles.note}>{entry.note}</Text>
+        <Button title="🗑 Видалити" onPress={confirmDelete} />
+      </View>
+    </TouchableOpacity>
   );
 }
 
