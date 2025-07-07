@@ -22,6 +22,10 @@ export default function EntryDetailsScreen() {
     <View style={styles.container}>
       <Text style={styles.emoji}>{entry.mood}</Text>
       <Text style={styles.note}>{entry.note}</Text>
+      <Button
+        title="✏️ Редагувати"
+        onPress={() => router.push(`/entry/${entry.id}/edit`)}
+      />
       <Button title="Go Back" onPress={() => router.back()} />
     </View>
   );

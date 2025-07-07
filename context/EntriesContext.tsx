@@ -12,6 +12,7 @@ type EntriesContextType = {
   entries: Entry[];
   addEntry: (entry: Omit<Entry, "id">) => void;
   deleteEntry: (id: number) => void;
+  editEntry: (updated: Entry) => void;
 };
 
 const EntriesContext = createContext<EntriesContextType | undefined>(undefined);
@@ -81,8 +82,22 @@ export function EntriesProvider({ children }: { children: React.ReactNode }) {
       console.error("Error saving after delete:", error)
     );
   };
+
+  const editEntry = (updatedEntry: Entry) => {
+    const updated = entries.map((entry) => {
+      return entry.id === updatedEntry.id ? updatedEntry : entry;
+    });
+    setEntries(updated);
+
+    AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updated)).catch((error) =>
+      console.error("Error saving after edit:", error)
+    );
+  };
+
   return (
-    <EntriesContext.Provider value={{ entries, addEntry, deleteEntry }}>
+    <EntriesContext.Provider
+      value={{ entries, addEntry, deleteEntry, editEntry }}
+    >
       {children}
     </EntriesContext.Provider>
   );
