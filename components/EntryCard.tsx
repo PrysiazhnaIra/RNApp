@@ -1,13 +1,7 @@
 import { Entry, useEntries } from "@/context/EntriesContext";
+import { format } from "date-fns";
 import { useRouter } from "expo-router";
-import {
-  Alert,
-  Button,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Toast from "react-native-toast-message";
 
 type Props = {
@@ -18,6 +12,10 @@ export default function EntryCard({ entry }: Props) {
   const { deleteEntry } = useEntries();
   const router = useRouter();
 
+  const formattedDate = entry.date
+    ? format(new Date(entry.date), "dd MMMM yyyy, HH:mm")
+    : "No date";
+
   const openDetails = () => {
     router.push(`/entry/${entry.id}`);
   };
@@ -26,7 +24,7 @@ export default function EntryCard({ entry }: Props) {
     deleteEntry(entry.id);
     Toast.show({
       type: "success",
-      text1: "The entry was deleted ✅",
+      text1: "The entry was deleted successfully ✅",
     });
   };
 
@@ -51,7 +49,11 @@ export default function EntryCard({ entry }: Props) {
       <View style={styles.card}>
         <Text style={styles.emoji}>{entry.mood}</Text>
         <Text style={styles.note}>{entry.note}</Text>
-        <Button title="🗑 Видалити" onPress={confirmDelete} />
+        <Text style={styles.date}>{formattedDate}</Text>
+
+        <TouchableOpacity style={styles.deleteButton} onPress={confirmDelete}>
+          <Text style={styles.deleteButtonText}>Delete</Text>
+        </TouchableOpacity>
       </View>
     </TouchableOpacity>
   );
@@ -59,7 +61,7 @@ export default function EntryCard({ entry }: Props) {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "floralwhite",
     padding: 16,
     borderRadius: 12,
     marginBottom: 12,
@@ -70,5 +72,23 @@ const styles = StyleSheet.create({
   },
   note: {
     fontSize: 16,
+  },
+  deleteButton: {
+    backgroundColor: "#FF5C5C",
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    marginTop: 12,
+    alignItems: "center",
+  },
+
+  deleteButtonText: {
+    color: "#fff",
+    fontSize: 16,
+  },
+  date: {
+    fontSize: 12,
+    color: "#777",
+    marginTop: 8,
   },
 });

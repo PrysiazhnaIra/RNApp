@@ -1,4 +1,5 @@
 import { useEntries } from "@/context/EntriesContext";
+import { format } from "date-fns";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { Button, StyleSheet, Text, View } from "react-native";
 
@@ -22,8 +23,13 @@ export default function EntryDetailsScreen() {
     <View style={styles.container}>
       <Text style={styles.emoji}>{entry.mood}</Text>
       <Text style={styles.note}>{entry.note}</Text>
+      <Text style={{ fontSize: 14, color: "#888" }}>
+        The entry was created:{" "}
+        {format(new Date(entry.date), "dd MMM yyyy, HH:mm")}
+      </Text>
+
       <Button
-        title="✏️ Редагувати"
+        title="✏️ Edit Entry"
         onPress={() => router.push(`/entry/${entry.id}/edit`)}
       />
       <Button title="Go Back" onPress={() => router.back()} />
