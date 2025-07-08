@@ -1,7 +1,13 @@
 import EntryCard from "@/components/EntryCard";
 import { useEntries } from "@/context/EntriesContext";
 import { Link } from "expo-router";
-import { Button, FlatList, StyleSheet, Text, View } from "react-native";
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 export default function HomeScreen() {
   const { entries } = useEntries();
@@ -10,11 +16,10 @@ export default function HomeScreen() {
     <View style={styles.container}>
       <Text style={styles.title}>Welcome to Mood Diary!</Text>
 
-      <Link href="/add-entry" asChild style={{ marginBottom: 20 }}>
-        <Button title="Add New Entry" />
-      </Link>
-      <Link href="/about" asChild>
-        <Button title="About App" />
+      <Link href="/add-entry" asChild>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>➕ Add Entry</Text>
+        </TouchableOpacity>
       </Link>
 
       <FlatList
@@ -23,11 +28,20 @@ export default function HomeScreen() {
         renderItem={({ item }) => <EntryCard entry={item} />}
         contentContainerStyle={styles.list}
       />
+
+      <Link href="/about" asChild>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>ℹ️ About App</Text>
+        </TouchableOpacity>
+      </Link>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  addBtn: {
+    color: "red",
+  },
   container: {
     flex: 1,
     justifyContent: "center",
@@ -38,5 +52,17 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginBottom: 20,
   },
-  list: { marginTop: 24 },
+  list: { marginTop: 18, marginBottom: 18 },
+  button: {
+    backgroundColor: "#4CAF50",
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 8,
+    width: 200,
+    alignItems: "center",
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
+  },
 });

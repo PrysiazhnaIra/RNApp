@@ -6,11 +6,12 @@ export type Entry = {
   id: number;
   mood: string;
   note: string;
+  date?: string;
 };
 
 type EntriesContextType = {
   entries: Entry[];
-  addEntry: (entry: Omit<Entry, "id">) => void;
+  addEntry: (entry: Omit<Entry, "id" | "date">) => void;
   deleteEntry: (id: number) => void;
   editEntry: (updated: Entry) => void;
 };
@@ -27,7 +28,10 @@ export function EntriesProvider({ children }: { children: React.ReactNode }) {
       try {
         const saved = await AsyncStorage.getItem(STORAGE_KEY);
         if (saved) {
-          const parsed: Entry[] = JSON.parse(saved);
+          const parsed: Entry[] = JSON.parse(saved).map((entry: Entry) => ({
+            ...entry,
+            date: entry.date ?? new Date().toISOString(),
+          }));
           setEntries(parsed);
         } else {
           Toast.show({
@@ -43,10 +47,11 @@ export function EntriesProvider({ children }: { children: React.ReactNode }) {
     loadEntries();
   }, []);
 
-  const addEntry = (entry: Omit<Entry, "id">) => {
-    const newEntry = {
+  const addEntry = (entry: Omit<Entry, "id" | "date">) => {
+    const newEntry: Entry = {
       ...entry,
       id: Date.now(),
+      date: new Date().toISOString(),
     };
 
     if (!newEntry.mood || !newEntry.note) {
