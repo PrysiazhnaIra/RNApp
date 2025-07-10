@@ -1,4 +1,6 @@
 import { Entry, useEntries } from "@/context/EntriesContext";
+import { useThemeContext } from "@/context/ThemeContext";
+import { darkTheme, lightTheme } from "@/utils/theme";
 import { format } from "date-fns";
 import { useRouter } from "expo-router";
 import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
@@ -11,6 +13,9 @@ type Props = {
 export default function EntryCard({ entry }: Props) {
   const { deleteEntry } = useEntries();
   const router = useRouter();
+
+  const { theme } = useThemeContext();
+  const colors = theme === "dark" ? darkTheme : lightTheme;
 
   const formattedDate = entry.date
     ? format(new Date(entry.date), "dd MMMM yyyy, HH:mm")
@@ -46,12 +51,20 @@ export default function EntryCard({ entry }: Props) {
 
   return (
     <TouchableOpacity onPress={openDetails} activeOpacity={0.7}>
-      <View style={styles.card}>
+      <View style={{ ...styles.card, backgroundColor: colors.card }}>
         <Text style={styles.emoji}>{entry.mood}</Text>
-        <Text style={styles.note}>{entry.note}</Text>
-        <Text style={styles.date}>{formattedDate}</Text>
+        <Text style={{ ...styles.note, color: colors.text }}>{entry.note}</Text>
+        <Text style={{ ...styles.date, color: colors.text }}>
+          {formattedDate}
+        </Text>
 
-        <TouchableOpacity style={styles.deleteButton} onPress={confirmDelete}>
+        <TouchableOpacity
+          style={{
+            ...styles.deleteButton,
+            backgroundColor: colors.deleteButton,
+          }}
+          onPress={confirmDelete}
+        >
           <Text style={styles.deleteButtonText}>Delete</Text>
         </TouchableOpacity>
       </View>
