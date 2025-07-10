@@ -4,11 +4,13 @@ type MoodButtonProps = {
   emoji: string;
   selected?: boolean;
   onPress: () => void;
+  style?: object;
 };
 export default function MoodButton({
   emoji,
   selected,
   onPress,
+  style,
 }: MoodButtonProps) {
   return (
     <Pressable
@@ -27,7 +29,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderWidth: 2,
     borderColor: "#ccc",
-    backgroundColor: "#fff",
   },
   selected: {
     backgroundColor: "#b3e5fc",

@@ -1,5 +1,7 @@
 import EntryCard from "@/components/EntryCard";
 import { useEntries } from "@/context/EntriesContext";
+import { useThemeContext } from "@/context/ThemeContext";
+import { darkTheme, lightTheme } from "@/utils/theme";
 import { Link } from "expo-router";
 import {
   FlatList,
@@ -12,13 +14,34 @@ import {
 export default function HomeScreen() {
   const { entries } = useEntries();
 
+  const { theme } = useThemeContext();
+  const colors = theme === "dark" ? darkTheme : lightTheme;
+  const { toggleTheme } = useThemeContext();
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Welcome to Mood Diary!</Text>
+    <View style={{ ...styles.container, backgroundColor: colors.background }}>
+      <Text style={{ ...styles.title, color: colors.text }}>
+        Welcome to Mood Diary!
+      </Text>
+
+      <TouchableOpacity onPress={toggleTheme}>
+        <Text
+          style={{ ...styles.addBtn, color: colors.text, marginBottom: 25 }}
+        >
+          {theme === "dark"
+            ? "🌞 Switch to Light Mode"
+            : "🌙 Switch to Dark Mode"}
+        </Text>
+      </TouchableOpacity>
 
       <Link href="/add-entry" asChild>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>➕ Add Entry</Text>
+        <TouchableOpacity
+          style={{
+            ...styles.button,
+            backgroundColor: colors.buttonBackground,
+          }}
+        >
+          <Text style={{ color: colors.buttonText }}>➕ Add Entry</Text>
         </TouchableOpacity>
       </Link>
 
@@ -30,8 +53,10 @@ export default function HomeScreen() {
       />
 
       <Link href="/about" asChild>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>ℹ️ About App</Text>
+        <TouchableOpacity
+          style={{ ...styles.button, backgroundColor: colors.buttonBackground }}
+        >
+          <Text style={{ color: colors.buttonText }}>ℹ️ About App</Text>
         </TouchableOpacity>
       </Link>
     </View>

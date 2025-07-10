@@ -1,13 +1,15 @@
 import MoodButton from "@/components/MoodButton";
 import { useEntries } from "@/context/EntriesContext";
+import { useThemeContext } from "@/context/ThemeContext";
+import { darkTheme, lightTheme } from "@/utils/theme";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import {
-  Button,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from "react-native";
 
@@ -16,6 +18,8 @@ export default function AddEntryScreen() {
   const [mood, setMood] = useState<string | null>(null);
   const { addEntry } = useEntries();
   const router = useRouter();
+  const { theme } = useThemeContext();
+  const colors = theme === "dark" ? darkTheme : lightTheme;
 
   const moods = ["😊", "😐", "😢", "😠", "🙈", "🤸‍♂️", "🔥"];
 
@@ -31,29 +35,56 @@ export default function AddEntryScreen() {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>How do you feel today?</Text>
+    <ScrollView
+      contentContainerStyle={{
+        ...styles.container,
+        backgroundColor: colors.background,
+      }}
+    >
+      <Text style={{ ...styles.title, color: colors.text }}>
+        How do you feel today?
+      </Text>
 
-      <View>
+      <View style={styles.moodContainer}>
         {moods.map((item) => (
           <MoodButton
             key={item}
             emoji={item}
             selected={mood === item}
             onPress={() => setMood(item)}
+            style={{
+              backgroundColor:
+                mood === item ? colors.buttonBackground : "#f0f0f0",
+            }}
           />
         ))}
       </View>
 
       <TextInput
-        style={styles.input}
+        style={{
+          ...styles.input,
+          color: colors.text,
+          backgroundColor: colors.card,
+        }}
         placeholder="Write a note..."
         value={note}
         onChangeText={setNote}
         multiline
       />
 
-      <Button title="Save" onPress={handleSave} />
+      <TouchableOpacity
+        style={{ ...styles.button, backgroundColor: colors.buttonBackground }}
+        onPress={handleSave}
+      >
+        <Text style={styles.buttonText}>Save</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={{ ...styles.button, backgroundColor: colors.buttonBackground }}
+        onPress={() => router.back()}
+      >
+        <Text style={styles.buttonText}>Go Back</Text>
+      </TouchableOpacity>
     </ScrollView>
   );
 }
@@ -62,7 +93,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 24,
-    justifyContent: "center",
   },
   title: {
     fontSize: 22,
@@ -77,5 +107,25 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     minHeight: 100,
     textAlignVertical: "top",
+  },
+  button: {
+    backgroundColor: "#FF5C5C",
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    marginTop: 12,
+    alignItems: "center",
+  },
+
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
+  },
+  moodContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginBottom: 16,
+    flexWrap: "wrap",
+    gap: 8,
   },
 });

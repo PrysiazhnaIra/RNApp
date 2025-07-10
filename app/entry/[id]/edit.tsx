@@ -1,13 +1,26 @@
 import { useEntries } from "@/context/EntriesContext";
+import { useThemeContext } from "@/context/ThemeContext";
+import { darkTheme, lightTheme } from "@/utils/theme";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
-import { Alert, Button, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Alert,
+  Button,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import Toast from "react-native-toast-message";
 
 export default function EditEntryScreen() {
   const { id } = useLocalSearchParams();
   const router = useRouter();
   const { entries, editEntry } = useEntries();
+
+  const { theme } = useThemeContext();
+  const colors = theme === "dark" ? darkTheme : lightTheme;
 
   const entry = entries.find((entry) => entry.id.toString() === id);
 
@@ -16,7 +29,7 @@ export default function EditEntryScreen() {
 
   if (!entry) {
     return (
-      <View style={styles.container}>
+      <View style={{ ...styles.container, backgroundColor: colors.background }}>
         <Text style={styles.error}>The entry is not found</Text>
         <Button title="Go Back" onPress={() => router.back()} />
       </View>
@@ -43,24 +56,40 @@ export default function EditEntryScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.label}>Enter your mood with emoji</Text>
+    <View style={{ ...styles.container, backgroundColor: colors.background }}>
+      <Text style={{ ...styles.label, color: colors.text }}>
+        Enter your mood with emoji
+      </Text>
       <TextInput
-        style={styles.input}
+        style={{ ...styles.input, color: colors.text }}
         value={mood}
         onChangeText={setMood}
         placeholder="😊"
       />
-      <Text style={styles.label}>Enter your note</Text>
+      <Text style={{ ...styles.label, color: colors.text }}>
+        Enter your note
+      </Text>
       <TextInput
-        style={styles.input}
+        style={{ ...styles.input, color: colors.text }}
         value={note}
         onChangeText={setNote}
         multiline
         placeholder="Describe your feelings..."
       />
 
-      <Button title="Save Changes" onPress={handleSave} />
+      <TouchableOpacity
+        style={{ ...styles.button, backgroundColor: colors.buttonBackground }}
+        onPress={handleSave}
+      >
+        <Text style={styles.buttonText}>Save Changes</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={{ ...styles.button, backgroundColor: colors.buttonBackground }}
+        onPress={() => router.back()}
+      >
+        <Text style={styles.buttonText}>Go Back</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -78,12 +107,25 @@ const styles = StyleSheet.create({
   input: {
     borderWidth: 1,
     borderColor: "#ccc",
-    padding: 10,
+    padding: 20,
     borderRadius: 5,
     fontSize: 16,
   },
   error: {
     fontSize: 18,
     color: "red",
+  },
+  button: {
+    backgroundColor: "#FF5C5C",
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    marginTop: 12,
+    alignItems: "center",
+  },
+
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
   },
 });
