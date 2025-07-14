@@ -5,6 +5,7 @@ export const lightTheme = {
   buttonBackground: "#40a165",
   buttonText: "#ffffff",
   deleteButton: "#FF5C5C",
+  placeholder: "#8e8e93",
 };
 
 export const darkTheme = {
@@ -14,4 +15,5 @@ export const darkTheme = {
   buttonBackground: "#0A84FF",
   buttonText: "#ffffff",
   deleteButton: "#ed6939",
+  placeholder: "#8e8e93",
 };
