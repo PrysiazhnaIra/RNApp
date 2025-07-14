@@ -3,16 +3,27 @@ import { useEntries } from "@/context/EntriesContext";
 import { useThemeContext } from "@/context/ThemeContext";
 import { darkTheme, lightTheme } from "@/utils/theme";
 import { Link } from "expo-router";
+import { useState } from "react";
 import {
   FlatList,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
 
 export default function HomeScreen() {
   const { entries } = useEntries();
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const filteredEntries = entries.filter((entry) => {
+    const query = searchQuery.toLowerCase();
+    return (
+      entry.note.toLowerCase().includes(query) ||
+      entry.mood.toLowerCase().includes(query)
+    );
+  });
 
   const { theme } = useThemeContext();
   const colors = theme === "dark" ? darkTheme : lightTheme;
@@ -34,6 +45,19 @@ export default function HomeScreen() {
         </Text>
       </TouchableOpacity>
 
+      <View style={styles.searchContainer}>
+        <TextInput
+          placeholder="Search your note..."
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+          style={{
+            ...styles.searchInput,
+            backgroundColor: colors.card,
+            color: colors.text,
+          }}
+        />
+      </View>
+
       <Link href="/add-entry" asChild>
         <TouchableOpacity
           style={{
@@ -46,7 +70,7 @@ export default function HomeScreen() {
       </Link>
 
       <FlatList
-        data={entries}
+        data={filteredEntries}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => <EntryCard entry={item} />}
         contentContainerStyle={styles.list}
@@ -89,5 +113,17 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#fff",
     fontSize: 16,
+  },
+  searchContainer: {
+    width: "100%",
+    marginBottom: 20,
+    paddingHorizontal: 10,
+  },
+  searchInput: {
+    height: 40,
+    borderColor: "#ccc",
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 10,
   },
 });
