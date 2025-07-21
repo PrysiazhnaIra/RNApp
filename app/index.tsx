@@ -65,6 +65,20 @@ export default function HomeScreen() {
               </Text>
             </TouchableOpacity>
 
+            <Link href="/calendar" asChild>
+              <TouchableOpacity
+                style={{
+                  ...styles.button,
+                  backgroundColor: colors.buttonBackground,
+                  marginBottom: 22,
+                }}
+              >
+                <Text style={{ color: colors.buttonText }}>
+                  🗓️ View Calendar
+                </Text>
+              </TouchableOpacity>
+            </Link>
+
             <SearchBar value={searchQuery} onChange={setSearchQuery} />
 
             <Link href="/add-entry" asChild>
@@ -112,7 +126,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    // marginBottom: 20,
   },
   list: { marginTop: 18, marginBottom: 18 },
   button: {
