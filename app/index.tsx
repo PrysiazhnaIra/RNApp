@@ -1,4 +1,5 @@
 import EntryCard from "@/components/EntryCard";
+import NotificationToggleButton from "@/components/NotificationToggleButton";
 import SearchBar from "@/components/SearchBar";
 import { useEntries } from "@/context/EntriesContext";
 import { useThemeContext } from "@/context/ThemeContext";
@@ -29,6 +30,7 @@ export default function HomeScreen() {
 
   const { theme } = useThemeContext();
   const colors = theme === "dark" ? darkTheme : lightTheme;
+
   const { toggleTheme } = useThemeContext();
 
   return (
@@ -64,6 +66,8 @@ export default function HomeScreen() {
                   : "🌙 Switch to Dark Mode"}
               </Text>
             </TouchableOpacity>
+
+            <NotificationToggleButton />
 
             <Link href="/calendar" asChild>
               <TouchableOpacity
