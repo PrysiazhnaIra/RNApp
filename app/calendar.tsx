@@ -30,7 +30,7 @@ export default function CalendarScreen() {
     {} as Record<string, any>
   );
 
-  const selectedEntry = entries.find(
+  const selectedEntries = entries.filter(
     (entry) =>
       entry.date !== undefined && entry.date.split("T")[0] === selectedDate
   );
@@ -58,15 +58,20 @@ export default function CalendarScreen() {
         }}
       />
 
-      {selectedDate && selectedEntry ? (
-        <View style={[styles.entryCard, { backgroundColor: colors.card }]}>
-          <Text style={[styles.entryText, { color: colors.text }]}>
-            Mood: {selectedEntry.mood}
-          </Text>
-          <Text style={[styles.entryText, { color: colors.text }]}>
-            Note: {selectedEntry.note}
-          </Text>
-        </View>
+      {selectedDate && selectedEntries.length > 0 ? (
+        selectedEntries.map((entry, index) => (
+          <View
+            key={index}
+            style={[styles.entryCard, { backgroundColor: colors.card }]}
+          >
+            <Text style={[styles.entryText, { color: colors.text }]}>
+              Mood: {entry.mood}
+            </Text>
+            <Text style={[styles.entryText, { color: colors.text }]}>
+              Note: {entry.note}
+            </Text>
+          </View>
+        ))
       ) : selectedDate ? (
         <Text style={{ color: colors.text, marginTop: 20 }}>
           No entry for this date.
