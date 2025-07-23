@@ -1,50 +1,128 @@
-# Welcome to your Expo app 👋
+# MoodMate
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+MoodMate is a mobile app built with React Native and Expo. It allows users to track and reflect on their daily mood, view their mood history on a calendar, and set daily reminders to record their emotional well-being. The goal is to support mental self-care through a simple and intuitive interface.
 
-## Get started
+## Features
 
-1. Install dependencies
+- Add Mood Entries: Users can log their mood, description, and date.
 
-   ```bash
-   npm install
-   ```
+- Mood History View: View all past mood entries in a scrollable list.
 
-2. Start the app
+- Calendar View: Visualize mood history with marked dates on a calendar.
 
-   ```bash
-   npx expo start
-   ```
+- Search Functionality: Quickly find mood entries by keyword.
 
-In the output, you'll find options to open the app in a
+- Dark/Light Theme Support: Auto-adapts to system theme or user preference.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- Local Storage Persistence: Mood entries and settings are saved on device.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+- Daily Reminders: Push notifications to remind users to record their mood.
 
-## Get a fresh project
+### Key Functionalities
 
-When you're ready, run:
+#### Home Page
 
-```bash
-npm run reset-project
-```
+- Displays a greeting and allows users to toggle theme (dark/light).
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+- Shows a button to create a new mood entry.
 
-## Learn more
+- Navigation to Calendar and Mood History pages.
 
-To learn more about developing your project with Expo, look at the following resources:
+#### Add Entry Page
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+- Form to select mood (with icons), add description, and choose date.
 
-## Join the community
+- Stores entry locally via AsyncStorage.
 
-Join our community of developers creating universal apps.
+#### Calendar Page
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- Uses react-native-calendars to show which days have mood entries.
+
+- Tapping a date displays associated entry if available.
+
+#### Mood History Page
+
+- Displays all entries sorted by date.
+
+- Search bar to filter by keyword.
+
+#### Notifications
+
+- Uses expo-notifications to schedule daily reminders.
+
+- Allows users to enable/disable notifications via toggle.
+
+- Stores notification preference in AsyncStorage.
+
+#### Theme Toggle
+
+- Automatically adapts to system theme or can be manually changed.
+
+- Implemented with React Context API and useColorScheme().
+
+### 📦 Technologies Used
+
+##### Frameworks & Languages
+
+- React Native with Expo
+
+- TypeScript
+
+##### Navigation
+
+- expo-router — file-based routing system with dynamic routing support
+
+###### State & Context
+
+- React Hooks (useState, useEffect, useContext, createContext)
+
+- AsyncStorage — persistent local data storage
+
+##### UI & UX
+
+- @expo/vector-icons — icons for moods and UI
+
+- ScrollView, Switch, TouchableOpacity, Alert — native components
+
+###### Calendar
+
+- react-native-calendars — displays mood entries by day
+
+##### Notifications
+
+- expo-notifications — for local push reminders
+
+## 🔧 Installation
+
+1. Clone the repository
+
+- git clone https://github.com/your-username/MoodMate.git
+
+2. Install dependencies
+
+- npm install
+
+3. Start the project
+
+- npx expo start
+
+4. Run on your device
+
+- Scan the QR code with Expo Go or run on emulator/simulator.
+
+### 🚀 Deployment
+
+Since it's a React Native app, you can build and publish via Expo:
+
+- npx expo build:android
+- npx expo build:ios
+
+Or publish to Expo hosting:
+
+- npx expo publish
+
+### Author
+
+**Ira Prysiazhna**  
+🔗 [GitHub](https://github.com/PrysiazhnaIra)  
+🔗 [LinkedIn](https://www.linkedin.com/in/prysiazhna-ira)
