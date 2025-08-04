@@ -30,8 +30,6 @@ export default function SearchBar({ value, onChange }: SearchBarProps) {
 const styles = StyleSheet.create({
   searchContainer: {
     width: "100%",
-    marginBottom: 20,
-    paddingHorizontal: 10,
   },
   searchInput: {
     height: 40,

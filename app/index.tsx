@@ -1,5 +1,4 @@
 import EntryCard from "@/components/EntryCard";
-import NotificationToggleButton from "@/components/NotificationToggleButton";
 import SearchBar from "@/components/SearchBar";
 import { useEntries } from "@/context/EntriesContext";
 import { useThemeContext } from "@/context/ThemeContext";
@@ -31,8 +30,6 @@ export default function HomeScreen() {
   const { theme } = useThemeContext();
   const colors = theme === "dark" ? darkTheme : lightTheme;
 
-  const { toggleTheme } = useThemeContext();
-
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -53,49 +50,50 @@ export default function HomeScreen() {
               Welcome to Mood Diary!
             </Text>
 
-            <TouchableOpacity onPress={toggleTheme}>
-              <Text
-                style={{
-                  ...styles.addBtn,
-                  color: colors.text,
-                  marginBottom: 25,
-                }}
-              >
-                {theme === "dark"
-                  ? "🌞 Switch to Light Mode"
-                  : "🌙 Switch to Dark Mode"}
-              </Text>
-            </TouchableOpacity>
+            <View style={styles.topContainer}>
+              <SearchBar value={searchQuery} onChange={setSearchQuery} />
 
-            <NotificationToggleButton />
+              <View style={styles.topBtnContainer}>
+                <Link href="/add-entry" asChild>
+                  <TouchableOpacity
+                    style={{
+                      ...styles.button,
+                      backgroundColor: colors.buttonBackground,
+                    }}
+                  >
+                    <Text style={{ color: colors.buttonText }}> Add Entry</Text>
+                  </TouchableOpacity>
+                </Link>
 
-            <Link href="/calendar" asChild>
-              <TouchableOpacity
-                style={{
-                  ...styles.button,
-                  backgroundColor: colors.buttonBackground,
-                  marginBottom: 22,
-                }}
-              >
-                <Text style={{ color: colors.buttonText }}>
-                  🗓️ View Calendar
-                </Text>
-              </TouchableOpacity>
-            </Link>
+                <View style={styles.topBtnSet}>
+                  <Link href="/calendar" asChild>
+                    <TouchableOpacity
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Text style={{ color: colors.buttonText }}>🗓️</Text>
+                    </TouchableOpacity>
+                  </Link>
 
-            <SearchBar value={searchQuery} onChange={setSearchQuery} />
-
-            <Link href="/add-entry" asChild>
-              <TouchableOpacity
-                style={{
-                  ...styles.button,
-                  backgroundColor: colors.buttonBackground,
-                  marginBottom: 16,
-                }}
-              >
-                <Text style={{ color: colors.buttonText }}>➕ Add Entry</Text>
-              </TouchableOpacity>
-            </Link>
+                  <Link href="/settings" asChild>
+                    <TouchableOpacity
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Text style={{ color: colors.buttonText }}>🛠</Text>
+                    </TouchableOpacity>
+                  </Link>
+                </View>
+              </View>
+            </View>
           </View>
         }
         ListFooterComponent={
@@ -108,7 +106,7 @@ export default function HomeScreen() {
                   marginTop: 16,
                 }}
               >
-                <Text style={{ color: colors.buttonText }}>ℹ️ About App</Text>
+                <Text style={{ color: colors.buttonText }}>About App</Text>
               </TouchableOpacity>
             </Link>
           </View>
@@ -139,9 +137,30 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     width: 200,
     alignItems: "center",
+    display: "flex",
+    justifyContent: "center",
   },
   buttonText: {
     color: "#fff",
     fontSize: 16,
+  },
+  topContainer: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    gap: 10,
+    width: "100%",
+    marginBottom: 20,
+  },
+  topBtnContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+  },
+  topBtnSet: {
+    display: "flex",
+    flexDirection: "row",
+    gap: 15,
   },
 });

@@ -96,7 +96,7 @@ MoodMate is a mobile app built with React Native and Expo. It allows users to tr
 
 1. Clone the repository
 
-- git clone https://github.com/your-username/MoodMate.git
+- git clone https://github.com/PrysiazhnaIra/MoodMate.git
 
 2. Install dependencies
 
