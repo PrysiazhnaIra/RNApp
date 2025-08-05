@@ -23,8 +23,9 @@ MoodMate is a mobile app built with React Native and Expo. It allows users to tr
 #### Welcome Page
 
 - Displays a greeting and allows users to move to main page.
-
-![welcome page](./assets/images/1.jpg)
+<p align="center">
+<img src="./assets/images/1.jpg" alt="welcome page" width="200" >
+</p>
 
 #### Main Page
 
@@ -40,9 +41,10 @@ MoodMate is a mobile app built with React Native and Expo. It allows users to tr
 
 - Navigation to page with info about the app.
 
-![main page](./assets/images/2.jpg)
-
-![info page](./assets/images/2.1.jpg)
+<div style="display: flex; gap: 20px; justify-content: center;">
+  <img src="./assets/images/2.jpg" alt="main page" width="200">
+  <img src="./assets/images/2.1.jpg" alt="info page" width="200">
+</div>
 
 #### Add Entry Page
 
@@ -50,7 +52,9 @@ MoodMate is a mobile app built with React Native and Expo. It allows users to tr
 
 - Stores entry locally via AsyncStorage.
 
-![add entry page](./assets/images/3.jpg)
+<p align="center">
+<img src="./assets/images/3.jpg" alt="add entry page" width="200" >
+</p>
 
 #### Settings
 
@@ -62,22 +66,29 @@ MoodMate is a mobile app built with React Native and Expo. It allows users to tr
 
 - Stores notification preference in AsyncStorage.
 
-![main page](./assets/images/4.jpg)
-![main page](./assets/images/5.jpg)
+<div style="display: flex; gap: 20px; justify-content: center;">
+  <img src="./assets/images/4.jpg" alt="settings page" width="200">
+  <img src="./assets/images/5.jpg" alt="settings page" width="200">
+</div>
 
 #### Calendar Page
 
 - Uses react-native-calendars to show which days have mood entries.
 
 - Tapping a date displays associated entry if available.
-  ![main page](./assets/images/7.jpg)
+
+<p align="center">
+<img src="./assets/images/7.jpg" alt="calendar page" width="200" >
+</p>
 
 #### Edit Page
 
 - Created opportunity to edit an entry.
 
-![main page](./assets/images/9.jpg)
-![main page](./assets/images/10.jpg)
+<div style="display: flex; gap: 20px; justify-content: center;">
+  <img src="./assets/images/9.jpg" alt="edit page" width="200">
+  <img src="./assets/images/10.jpg" alt="edit page" width="200">
+</div>
 
 ### 📦 Technologies Used
 
