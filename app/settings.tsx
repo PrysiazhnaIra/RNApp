@@ -2,24 +2,44 @@ import NotificationToggleButton from "@/components/NotificationToggleButton";
 import { useThemeContext } from "@/context/ThemeContext";
 import { darkTheme, lightTheme } from "@/utils/theme";
 import { Link } from "expo-router";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useState } from "react";
+import { StyleSheet, Switch, Text, TouchableOpacity, View } from "react-native";
 
 export default function WelcomeScreen() {
-  const { theme } = useThemeContext();
+  const { theme, toggleTheme } = useThemeContext();
   const colors = theme === "dark" ? darkTheme : lightTheme;
-  const { toggleTheme } = useThemeContext();
+  const [isTheme, setIsTheme] = useState(theme === "dark");
+
+  const toggleSwitch = () => {
+    setIsTheme(!isTheme);
+    toggleTheme();
+  };
+
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <TouchableOpacity onPress={toggleTheme}>
+      <TouchableOpacity
+        onPress={toggleTheme}
+        style={{
+          ...styles.button,
+          backgroundColor: colors.buttonBackground,
+          marginBottom: 18,
+        }}
+      >
         <Text
           style={{
             ...styles.addBtn,
-            color: colors.text,
-            marginBottom: 25,
+            color: colors.buttonText,
+            marginBottom: 18,
           }}
         >
-          {theme === "dark" ? "🌞 Switch Theme" : "🌙 Switch Theme"}
+          {theme === "dark" ? "🌞 Toggle Theme" : "🌙 Toggle Theme"}{" "}
         </Text>
+        <Switch
+          value={isTheme}
+          onValueChange={toggleSwitch}
+          trackColor={{ false: "#767577", true: "#81b0ff" }}
+          thumbColor={isTheme ? "#007AFF" : "#f4f3f4"}
+        />
       </TouchableOpacity>
       <NotificationToggleButton />
 
@@ -28,7 +48,7 @@ export default function WelcomeScreen() {
           style={{
             ...styles.button,
             backgroundColor: colors.buttonBackground,
-            marginBottom: 22,
+            marginBottom: 18,
           }}
         >
           <Text style={{ color: colors.buttonText }}>🗓️ View Calendar</Text>
