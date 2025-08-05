@@ -20,13 +20,29 @@ MoodMate is a mobile app built with React Native and Expo. It allows users to tr
 
 ### Key Functionalities
 
-#### Home Page
+#### Welcome Page
 
-- Displays a greeting and allows users to toggle theme (dark/light).
+- Displays a greeting and allows users to move to main page.
+
+![welcome page](./assets/images/1.jpg)
+
+#### Main Page
+
+- Navigation to Calendar and Mood History pages.
+
+- Display a button to move to settings.
+
+- Implemented search bar to filter by keyword.
+
+- Displays all entries sorted by date.
 
 - Shows a button to create a new mood entry.
 
-- Navigation to Calendar and Mood History pages.
+- Navigation to page with info about the app.
+
+![main page](./assets/images/2.jpg)
+
+![info page](./assets/images/2.1.jpg)
 
 #### Add Entry Page
 
@@ -34,19 +50,11 @@ MoodMate is a mobile app built with React Native and Expo. It allows users to tr
 
 - Stores entry locally via AsyncStorage.
 
-#### Calendar Page
+![add entry page](./assets/images/3.jpg)
 
-- Uses react-native-calendars to show which days have mood entries.
+#### Settings
 
-- Tapping a date displays associated entry if available.
-
-#### Mood History Page
-
-- Displays all entries sorted by date.
-
-- Search bar to filter by keyword.
-
-#### Notifications
+- Implemented Theme Toggle with React Context API and useColorScheme().
 
 - Uses expo-notifications to schedule daily reminders.
 
@@ -54,11 +62,22 @@ MoodMate is a mobile app built with React Native and Expo. It allows users to tr
 
 - Stores notification preference in AsyncStorage.
 
-#### Theme Toggle
+![main page](./assets/images/4.jpg)
+![main page](./assets/images/5.jpg)
 
-- Automatically adapts to system theme or can be manually changed.
+#### Calendar Page
 
-- Implemented with React Context API and useColorScheme().
+- Uses react-native-calendars to show which days have mood entries.
+
+- Tapping a date displays associated entry if available.
+  ![main page](./assets/images/7.jpg)
+
+#### Edit Page
+
+- Created opportunity to edit an entry.
+
+![main page](./assets/images/9.jpg)
+![main page](./assets/images/10.jpg)
 
 ### 📦 Technologies Used
 

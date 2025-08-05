@@ -28,7 +28,7 @@ export default function EntryDetailsScreen() {
     <View style={{ ...styles.container, backgroundColor: colors.background }}>
       <View>
         <Text style={styles.emoji}>{entry.mood}</Text>
-        <Text style={styles.note}>{entry.note}</Text>
+        <Text style={{ ...styles.note, color: colors.text }}>{entry.note}</Text>
         <Text style={{ fontSize: 14, color: "#888" }}>
           The entry was created:{" "}
           {entry.date
@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
   },
   note: {
     fontSize: 18,
+    color: "#ffffff",
   },
   error: {
     fontSize: 18,
